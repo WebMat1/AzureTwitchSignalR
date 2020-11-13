@@ -1,0 +1,5 @@
+﻿<linker>
+  <assembly fullname="BlazorTwitch.Client">
+    <type fullname="*" required="true" />
+  </assembly>
+</linker>

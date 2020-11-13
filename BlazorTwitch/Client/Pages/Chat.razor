@@ -1,0 +1,94 @@
+﻿@page "/chat";
+@using Microsoft.AspNetCore.SignalR.Client;
+@inject IJSRuntime JsRuntime;
+@inject HttpClient Http;
+<div class="col-9">
+    <h3>Chat</h3>
+
+    <form class="form-inline">
+        <div class="form-group mb-2">
+            <label for="name" class="sr-only">Name</label>
+            <input type="text" class="form-control" id="name" @bind="sender.sender" placeholder="Name">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="text" class="sr-only">Text</label>
+            <input type="text" class="form-control" @bind="sender.text" id="text" placeholder="Text">
+        </div>
+        <button type="submit" @onclick:preventDefault="true" @onclick="()=>SendMessage()" class="btn btn-primary mb-2">Send</button>
+    </form>
+
+    @if (messages.Count > 0)
+    {
+        foreach (Model item in messages)
+        {
+            <p><span style="color:blue;">@item.sender</span> : @item.text</p>;
+        }
+    }
+    else
+    {
+        <p>Nothing here!</p>
+    }
+
+</div>
+
+    @code {
+        private HubConnection connection { get; set; }
+        public static List<Model> messages { get; set; } = new List<Model>();
+        private Model sender = new Model();
+
+        private const string url = "https://azuretwitchsignalr.azurewebsites.net/api";
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                // declara variaveis
+
+                //passa as diretrizes da conexão
+                if (connection == null)
+                {
+                    connection = new HubConnectionBuilder().WithUrl(url).WithAutomaticReconnect().Build();
+
+                    // faz os contratos para receber as info em tempo real
+
+                    //contrato para receber quando o servidor fizer logout deste cliente
+                    connection.On<object>("newMessage", (msg) => newMessage(msg));
+
+                    await connection.StartAsync();
+                }
+                else if (connection.State == HubConnectionState.Disconnected) //inicia a conexão com o servidor
+                    await connection.StartAsync();
+
+
+            }
+
+            await base.OnAfterRenderAsync(firstRender);
+        }
+
+        public void newMessage(object message)
+        {
+            //Console.Clear();
+
+            JsRuntime.InvokeAsync<string>("console.log", message.ToString());
+
+            Model obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Model>(message.ToString());
+
+            messages.Add(obj);
+
+            StateHasChanged();
+        }
+
+        public class Model
+        {
+            public string sender { get; set; }
+            public string text { get; set; }
+        }
+
+        private async Task SendMessage()
+        {
+            var response = await Http.PostAsJsonAsync(url + "/messages", sender);
+
+            sender.text = "";
+            StateHasChanged();
+        }
+    }

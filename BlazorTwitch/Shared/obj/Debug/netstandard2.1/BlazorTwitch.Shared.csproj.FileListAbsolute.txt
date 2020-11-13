@@ -1,0 +1,9 @@
+C:\Users\webma\source\repos\BlazorTwitch\Shared\bin\Debug\netstandard2.1\BlazorTwitch.Shared.deps.json
+C:\Users\webma\source\repos\BlazorTwitch\Shared\bin\Debug\netstandard2.1\BlazorTwitch.Shared.dll
+C:\Users\webma\source\repos\BlazorTwitch\Shared\bin\Debug\netstandard2.1\BlazorTwitch.Shared.pdb
+C:\Users\webma\source\repos\BlazorTwitch\Shared\obj\Debug\netstandard2.1\BlazorTwitch.Shared.csprojAssemblyReference.cache
+C:\Users\webma\source\repos\BlazorTwitch\Shared\obj\Debug\netstandard2.1\BlazorTwitch.Shared.AssemblyInfoInputs.cache
+C:\Users\webma\source\repos\BlazorTwitch\Shared\obj\Debug\netstandard2.1\BlazorTwitch.Shared.AssemblyInfo.cs
+C:\Users\webma\source\repos\BlazorTwitch\Shared\obj\Debug\netstandard2.1\BlazorTwitch.Shared.csproj.CoreCompileInputs.cache
+C:\Users\webma\source\repos\BlazorTwitch\Shared\obj\Debug\netstandard2.1\BlazorTwitch.Shared.dll
+C:\Users\webma\source\repos\BlazorTwitch\Shared\obj\Debug\netstandard2.1\BlazorTwitch.Shared.pdb
